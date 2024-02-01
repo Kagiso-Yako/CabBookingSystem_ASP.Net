@@ -12,8 +12,8 @@ namespace CabBooking.DAL
 {
     public class BaseRepository<T> : IRepository<T> where T : BaseModel
     {
-        private readonly CabBookingContext _context;
-        private readonly DbSet<T> _DBSet;
+        protected readonly CabBookingContext _context;
+        protected readonly DbSet<T> _DBSet;
 
         public BaseRepository(CabBookingContext context)
         {

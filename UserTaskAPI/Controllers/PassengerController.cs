@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
 using CabBooking.Models;
+using CabBooking.DAL;
 
 
 namespace CabBooking.Controllers
@@ -10,6 +11,18 @@ namespace CabBooking.Controllers
     [Route("api/[controller]")]
     public abstract class PassengerController : Controller
     {
+
+        // Private members
+        private readonly UserRepository<PassengerModel> _repo;
+        private readonly CabBookingContext _context;
+
+        //Public Members
+        public PassengerController(CabBookingContext context)
+        {
+            _context = context;
+            _repo = new UserRepository<PassengerModel>(_context);
+        }
+
         /*CRUD Operations:
          * Create
          * Read

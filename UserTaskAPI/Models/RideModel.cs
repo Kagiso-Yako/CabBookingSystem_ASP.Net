@@ -8,9 +8,7 @@ namespace CabBooking.Models
 
         public string? Destination { get; set; }
 
-        public float cost { get; set; }
-
-        public float tip { get; set; }
+        public string? PaymentID { get; set; }
 
         public string? PassengerID { get; set; }
 
@@ -18,6 +16,15 @@ namespace CabBooking.Models
 
         public int DriverRating { get; set; }
 
-        public int PassengerRatingm { get; set; }
+        public int PassengerRating { get; set; }
+
+        public DateTime StartTime { get; set; }
+
+        public DateTime EndTime { get; set; }
+
+        public bool EmergencyFlag { get; set; }
+
+        public bool Active { get; set; }
+        
     }
 }

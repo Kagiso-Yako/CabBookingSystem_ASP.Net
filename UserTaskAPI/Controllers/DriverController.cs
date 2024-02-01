@@ -11,11 +11,13 @@ namespace CabBooking.Controllers
     {
         // Private members
         private readonly UserRepository<DriverModel> _repo;
+        private readonly CabBookingContext _context;
 
         //Public Members
         public DriverController(CabBookingContext context)
         {
-            _repo = new UserRepository<DriverModel>(context);
+            _context = context;
+            _repo = new UserRepository<DriverModel>(_context);
         }
 
         /*CRUD Operations:
@@ -25,7 +27,7 @@ namespace CabBooking.Controllers
          * Delete*/
 
         // GET: HomeController/Details/5
-        public ActionResult Details(string id)
+        public ActionResult GetEntity(string id)
         {
             return View();
         }

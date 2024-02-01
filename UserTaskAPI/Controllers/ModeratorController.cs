@@ -1,11 +1,24 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CabBooking.Models;
+using CabBooking.DAL;
 
 namespace CabBooking.Controllers
 {
     public class ModeratorController : Controller
     {
+
+        // Private members
+        private readonly UserRepository<ModeratorModel> _repo;
+        private readonly CabBookingContext _context;
+
+        //Public Members
+        public ModeratorController(CabBookingContext context)
+        {
+            _context = context;
+            _repo = new UserRepository<ModeratorModel>(_context);
+        }
+
         /*CRUD Operations:
          * Create
          * Read
@@ -13,7 +26,12 @@ namespace CabBooking.Controllers
          * Delete*/
 
         // GET: HomeController/Details/5
-        public ActionResult Details(string id)
+        public ActionResult GetEntity(string id)
+        {
+            return View();
+        }
+
+        public ActionResult GetAll()
         {
             return View();
         }
@@ -35,7 +53,7 @@ namespace CabBooking.Controllers
 
         // POST: HomeController/Edit/5
         [HttpPost]
-        public ActionResult Edit([FromBody]ModeratorModel collection)
+        public ActionResult Update([FromBody]ModeratorModel collection)
         {
             try
             {
