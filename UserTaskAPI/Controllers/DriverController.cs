@@ -10,14 +10,14 @@ namespace CabBooking.Controllers
     public class DriverController : Controller
     {
         // Private members
-        private readonly UserRepository<DriverModel> _repo;
+        private readonly UserDataRepository<DriverModel> _repo;
         private readonly CabBookingContext _context;
 
         //Public Members
         public DriverController(CabBookingContext context)
         {
             _context = context;
-            _repo = new UserRepository<DriverModel>(_context);
+            _repo = new UserDataRepository<DriverModel>(_context);
         }
 
         /*CRUD Operations:

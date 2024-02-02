@@ -13,14 +13,14 @@ namespace CabBooking.Controllers
     {
 
         // Private members
-        private readonly UserRepository<PassengerModel> _repo;
+        private readonly UserDataRepository<PassengerModel> _repo;
         private readonly CabBookingContext _context;
 
         //Public Members
         public PassengerController(CabBookingContext context)
         {
             _context = context;
-            _repo = new UserRepository<PassengerModel>(_context);
+            _repo = new UserDataRepository<PassengerModel>(_context);
         }
 
         /*CRUD Operations:

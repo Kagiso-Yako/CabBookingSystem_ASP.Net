@@ -11,5 +11,11 @@ namespace CabBooking.Models
         public int Rating { get; set;  }
 
         public int Trips { get; set; }
+
+        public DateTime DateAccountCreated { get; set; }
+
+        public DateTime DateAccountDeactivated { get; set; }
+
+        public bool AccountActive { get; set; } = false;
     }
 }
