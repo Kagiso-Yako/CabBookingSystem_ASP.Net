@@ -9,18 +9,18 @@ namespace CabBooking.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public abstract class PassengerController : Controller
+    public abstract class UserController : Controller
     {
 
         // Private members
-        private readonly UserDataRepository<PassengerModel> _repo;
+        private readonly UserDataRepository _repo;
         private readonly CabBookingContext _context;
 
         //Public Members
-        public PassengerController(CabBookingContext context)
+        public UserController(CabBookingContext context)
         {
             _context = context;
-            _repo = new UserDataRepository<PassengerModel>(_context);
+            _repo = new UserDataRepository(_context);
         }
 
         /*CRUD Operations:
@@ -29,15 +29,16 @@ namespace CabBooking.Controllers
          * Update
          * Delete*/
         // GET: HomeController/Details/5
+        [HttpGet ("Details/{id}")]
         public ActionResult Details(string id)
         {
             return View();
         }
 
         // POST: HomeController/Create
-        [HttpPost]
+        [HttpPost ("Create")]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateModerator(ModeratorModel collection)
+        public ActionResult CreateUser([FromBody] UserModel entity)
         {
             try
             {
@@ -45,12 +46,12 @@ namespace CabBooking.Controllers
             }
             catch
             {
-                return View();
+                return View("Views/CreateAccount.cshtml", entity);
             }
         }
 
         // POST: HomeController/Edit/5
-        [HttpPost]
+        [HttpPost ("Update/{id}")]
         public ActionResult Edit([FromBody] ModeratorModel collection)
         {
             try
@@ -64,10 +65,18 @@ namespace CabBooking.Controllers
         }
 
         // GET: HomeController/Delete/5
-        [HttpPost]
+        [HttpPost ("Delete/{id}")]
         public ActionResult Delete(string id)
         {
-            return View();
+            var entity = _repo.GetItem(id);
+            if (entity != null)
+            {
+                entity.DateAccountDeactivated = DateTime.Now;
+                entity.AccountActive = false;
+                _repo.Update(entity);
+                return View();
+            }
+            return BadRequest();
         }
 
         /* Complex operations:

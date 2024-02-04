@@ -27,32 +27,29 @@ namespace CabBooking.Controllers
          * Delete*/
 
         // GET: HomeController/Details/5
+        [HttpGet ("Driver/{id}")]
         public ActionResult GetEntity(string id)
         {
-            return View();
+            return View("Views/DriverProfile",_repo.GetItem(id));
         }
 
         // POST: HomeController/Create
-        [HttpPost]
+        [HttpPost ("CreateNew")]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateModerator(ModeratorModel collection)
+        public ActionResult CreateDriverAccount([FromBody] DriverModel entity)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+
+                _repo.Create(entity);
+                return Ok();
         }
 
         // POST: HomeController/Edit/5
-        [HttpPost]
-        public ActionResult Edit([FromBody] ModeratorModel collection)
+        [HttpPost ("Update")]
+        public ActionResult UpdateInformation([FromBody] DriverModel entity)
         {
             try
             {
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -62,7 +59,7 @@ namespace CabBooking.Controllers
         }
 
         // GET: HomeController/Delete/5
-        [HttpPost]
+        [HttpPost ("Delete/{id}")]
         public ActionResult Delete(string id)
         {
             return View();
@@ -72,8 +69,8 @@ namespace CabBooking.Controllers
          * Accept ride requests
          * Start ride - Simulating time elapsed and distance travelled
          * End ride - Reporting trip stats, such as cost, receiving payment and tips
-         * Rate Experience/User
-         * Chat functionality - Most complex - Unsure how to approach yet.
+         * Rate Experience/User 
+         * Chat functionality - Most complex - Unsure how to approach yet. - Not part of core
          * */
 
     }

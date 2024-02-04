@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using CabBooking.Models;
 
 namespace CabBooking.Models
 {

@@ -15,5 +15,7 @@
         public DateTime DateAccountDeactivated { get; set; }
 
         public bool AccountActive { get; set; }
+
+        public bool AccountSuspended { get; set; }
     }
 }

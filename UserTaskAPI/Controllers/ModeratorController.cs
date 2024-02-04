@@ -5,6 +5,8 @@ using CabBooking.DAL;
 
 namespace CabBooking.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class ModeratorController : Controller
     {
 
@@ -26,18 +28,20 @@ namespace CabBooking.Controllers
          * Delete*/
 
         // GET: HomeController/Details/5
+        [HttpGet("GetEntity/{id}")]
         public ActionResult GetEntity(string id)
         {
-            return View();
+            return View("");
         }
 
+        [HttpGet("GetAll")]
         public ActionResult GetAll()
         {
             return View();
         }
 
         // POST: HomeController/Create
-        [HttpPost]
+        [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public ActionResult CreateModerator(ModeratorModel collection)
         {
@@ -52,8 +56,8 @@ namespace CabBooking.Controllers
         }
 
         // POST: HomeController/Edit/5
-        [HttpPost]
-        public ActionResult Update([FromBody]ModeratorModel collection)
+        [HttpPost("Update/{id}")]
+        public ActionResult Update([FromBody]ModeratorModel moderator)
         {
             try
             {
@@ -66,9 +70,10 @@ namespace CabBooking.Controllers
         }
 
         // GET: HomeController/Delete/5
-        [HttpPost]
+        [HttpPost ("Delete/{id}")]
         public ActionResult Delete(string id)
         {
+            _repo.Delete(id);
             return View();
         }
 
