@@ -11,14 +11,14 @@ namespace CabBooking.Controllers
     {
 
         // Private members
-        private readonly UserDataRepository _repo;
+        private readonly ModeratorRepository _repo;
         private readonly CabBookingContext _context;
 
         //Public Members
         public ModeratorController(CabBookingContext context)
         {
             _context = context;
-            _repo = new UserDataRepository(_context);
+            _repo = new ModeratorRepository(_context);
         }
 
         /*CRUD Operations:
@@ -28,7 +28,7 @@ namespace CabBooking.Controllers
          * Delete*/
 
         // GET: HomeController/Details/5
-        [HttpGet("GetEntity/{id}")]
+        [HttpGet("GetModProfile/{id}")]
         public ActionResult GetEntity(string id)
         {
             return View("");
@@ -41,13 +41,13 @@ namespace CabBooking.Controllers
         }
 
         // POST: HomeController/Create
-        [HttpPost("Create")]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateModerator(ModeratorModel collection)
+        [HttpPost("CreateModAccount")]
+        public ActionResult CreateModerator([FromBody] ModeratorModel entity)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _repo.CreateMod(entity);
+                return Ok();
             }
             catch
             {
@@ -56,7 +56,7 @@ namespace CabBooking.Controllers
         }
 
         // POST: HomeController/Edit/5
-        [HttpPost("Update/{id}")]
+        [HttpPost("UpdateModDetails/{id}")]
         public ActionResult Update([FromBody]ModeratorModel moderator)
         {
             try
@@ -70,7 +70,7 @@ namespace CabBooking.Controllers
         }
 
         // GET: HomeController/Delete/5
-        [HttpPost ("Delete/{id}")]
+        [HttpPost ("DeleteModAccount/{id}")]
         public ActionResult Delete(string id)
         {
             _repo.Delete(id);

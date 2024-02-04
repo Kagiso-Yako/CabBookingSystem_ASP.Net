@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq.Expressions;
 using CabBooking.Models;
 using CabBooking.DAL;
 
@@ -9,7 +8,7 @@ namespace CabBooking.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public abstract class UserController : Controller
+    public class PassengerController : Controller
     {
 
         // Private members
@@ -17,7 +16,7 @@ namespace CabBooking.Controllers
         private readonly CabBookingContext _context;
 
         //Public Members
-        public UserController(CabBookingContext context)
+        public PassengerController(CabBookingContext context)
         {
             _context = context;
             _repo = new UserDataRepository(_context);
@@ -29,20 +28,20 @@ namespace CabBooking.Controllers
          * Update
          * Delete*/
         // GET: HomeController/Details/5
-        [HttpGet ("Details/{id}")]
+        [HttpGet ("ProfileInfo/{id}")]
         public ActionResult Details(string id)
         {
             return View();
         }
 
         // POST: HomeController/Create
-        [HttpPost ("Create")]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateUser([FromBody] UserModel entity)
+        [HttpPost ("CreateAccount")]
+        public ActionResult CreateUser([FromBody] PassengerModel entity)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _repo.Create(entity);
+                return Ok();
             }
             catch
             {
@@ -51,8 +50,8 @@ namespace CabBooking.Controllers
         }
 
         // POST: HomeController/Edit/5
-        [HttpPost ("Update/{id}")]
-        public ActionResult Edit([FromBody] ModeratorModel collection)
+        [HttpPost ("UpdateProfile/{id}")]
+        public ActionResult Edit([FromBody] PassengerModel entity)
         {
             try
             {
@@ -65,7 +64,7 @@ namespace CabBooking.Controllers
         }
 
         // GET: HomeController/Delete/5
-        [HttpPost ("Delete/{id}")]
+        [HttpPost ("DeleteAccount/{id}")]
         public ActionResult Delete(string id)
         {
             var entity = _repo.GetItem(id);

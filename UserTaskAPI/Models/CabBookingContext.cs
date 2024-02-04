@@ -8,5 +8,9 @@ namespace CabBooking.Models
     {
         public CabBookingContext(DbContextOptions<CabBookingContext> options) : base(options) { }
 
+        public DbSet<BaseModel> BaseModels { get; set; }
+
+        public DbSet<UserModel> UserModels { get; set; }
+
     }
 }

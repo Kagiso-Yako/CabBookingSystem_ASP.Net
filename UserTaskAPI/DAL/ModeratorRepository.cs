@@ -10,16 +10,26 @@ namespace CabBooking.DAL
         private readonly DbSet<RideModel> _DBSetRides;
         private readonly DbSet<CarModel> _DBSetCars;
         private readonly DbSet<PaymentModel> _DBSetPayment;
-        private readonly DbSet<DriverModel> _DBSetDrivers;
-        private readonly DbSet<UserModel> _DBSetPassengers;
+        private readonly DbSet<ModeratorModel> _DBSetMods;
 
         public ModeratorRepository(CabBookingContext context) : base(context) 
         {
             _DBSetCars = _context.Set<CarModel>();
             _DBSetRides = _context.Set<RideModel>();
             _DBSetPayment = _context.Set<PaymentModel>();
-            _DBSetDrivers = _context.Set<DriverModel>();
-            _DBSetPassengers = _context.Set<UserModel>();
+            _DBSetMods = _context.Set<ModeratorModel>();
+
+        }
+
+        public void CreateMod(ModeratorModel entity)
+        {
+            try
+            {
+                _DBSetMods.Add(entity);
+                Save_Changes();
+            }
+            catch { }
+
         }
 
         /*

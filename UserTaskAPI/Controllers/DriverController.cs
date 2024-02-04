@@ -27,15 +27,14 @@ namespace CabBooking.Controllers
          * Delete*/
 
         // GET: HomeController/Details/5
-        [HttpGet ("Driver/{id}")]
-        public ActionResult GetEntity(string id)
+        [HttpGet ("DriverProfile/{id}")]
+        public ActionResult GetDriverInfo(string id)
         {
             return View("Views/DriverProfile",_repo.GetItem(id));
         }
 
         // POST: HomeController/Create
-        [HttpPost ("CreateNew")]
-        [ValidateAntiForgeryToken]
+        [HttpPost ("CreateAccount")]
         public ActionResult CreateDriverAccount([FromBody] DriverModel entity)
         {
 
@@ -44,7 +43,7 @@ namespace CabBooking.Controllers
         }
 
         // POST: HomeController/Edit/5
-        [HttpPost ("Update")]
+        [HttpPost ("UpdateProfile")]
         public ActionResult UpdateInformation([FromBody] DriverModel entity)
         {
             try
@@ -59,7 +58,7 @@ namespace CabBooking.Controllers
         }
 
         // GET: HomeController/Delete/5
-        [HttpPost ("Delete/{id}")]
+        [HttpPost ("DeleteAccount/{id}")]
         public ActionResult Delete(string id)
         {
             return View();
