@@ -1,15 +1,16 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CabBooking.Models
 {
     public class RideModel : BaseModel
     {
+        [Required]
         public string? Location { get; set; }
-
+        [Required]
         public string? Destination { get; set; }
 
         public string? PaymentID { get; set; }
-
+        [Required]
         public string? PassengerID { get; set; }
 
         public string? DriverID { get; set; }

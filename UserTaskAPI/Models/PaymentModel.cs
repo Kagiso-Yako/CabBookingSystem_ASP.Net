@@ -9,5 +9,7 @@
         public float? Tip { get; set; }
 
         public String? PaymentType { get; set; }
+
+        public DateTime? DateTime { get; set; }
     }
 }
