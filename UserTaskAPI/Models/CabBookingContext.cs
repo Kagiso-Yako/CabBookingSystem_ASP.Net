@@ -12,5 +12,11 @@ namespace CabBooking.Models
 
         public DbSet<UserModel> UserModels { get; set; }
 
+        public DbSet<CabBooking.Models.DriverModel>? DriverModel { get; set; }
+
+        public DbSet<CabBooking.Models.ModeratorModel>? ModeratorModel { get; set; }
+
+        public DbSet<CabBooking.Models.PassengerModel>? PassengerModel { get; set; }
+
     }
 }

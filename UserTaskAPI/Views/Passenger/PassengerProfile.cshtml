@@ -1,4 +1,4 @@
-﻿@model CabBooking.Models.DriverModel
+﻿@model CabBooking.Models.PassengerModel
 
 @{
     ViewData["Title"] = "View";
@@ -7,21 +7,9 @@
 <h1>View</h1>
 
 <div>
-    <h4>DriverModel</h4>
+    <h4>PassengerModel</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CarID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CarID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Busy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Busy)
-        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>

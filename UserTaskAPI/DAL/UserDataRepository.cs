@@ -129,7 +129,7 @@ namespace CabBooking.DAL
         //      Distribution of rating for the specified driver if Driver id null, then general.
         public Dictionary<int, int> RatingDistribution(string ? DriverID)
         {
-            var rating = _DBSetRides?.Where(trips => trips.DriverID == (DriverID ?? trips.DriverID))
+            var rating = _DBSetRides.Where(trips => trips.DriverID == (DriverID ?? trips.DriverID))
                     ?.GroupBy(trips => trips.DriverRating)
                     ?.Select(trips => new { DriverRating = trips.Key, count = trips.Count() })
                     ?.ToArray();
@@ -151,7 +151,7 @@ namespace CabBooking.DAL
         //      When the DriverID is not given, general performance/busyness is returned
         public Dictionary<int, int> WorkVsTimeDistribution(string ? DriverID)
         {
-            var rating = _DBSetRides?.Where(trips => trips.DriverID == (DriverID ?? trips.DriverID))
+            var rating = _DBSetRides.Where(trips => trips.DriverID == (DriverID ?? trips.DriverID))
                 ?.GroupBy(trips => trips.StartTime.Hour)
                 ?.Select(trips => new { Hour = trips.Key, count = trips.Count() })
                 ?.ToArray();
@@ -174,7 +174,7 @@ namespace CabBooking.DAL
 
         public Dictionary<DayOfWeek , int> WorkVsDayDistribution(string ? DriverID)
         {   
-            var rating = _DBSetRides?.Where(trips => trips.DriverID == (DriverID ?? trips.DriverID))
+            var rating = _DBSetRides.Where(trips => trips.DriverID == (DriverID ?? trips.DriverID))
                 ?.GroupBy(trips => trips.StartTime.DayOfWeek)
                 ?.Select(trips => new { DoW = trips.Key, count = trips.Count() })
                 ?.ToArray();

@@ -11,5 +11,8 @@
         public String? PaymentType { get; set; }
 
         public DateTime? DateTime { get; set; }
+
+
+        public string CustomerID { get; set; } = "";
     }
 }

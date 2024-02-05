@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CabBookingContext>(opt => opt.UseInMemoryDatabase("MyConnectionStr"));
 builder.Services.AddMvc();
 builder.Services.AddControllers();
+builder.Logging.AddConsole();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

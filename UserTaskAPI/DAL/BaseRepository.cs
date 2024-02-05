@@ -21,7 +21,7 @@ namespace CabBooking.DAL
             _DBSet = context.Set<T>();
         }
 
-        public T ? GetItem(string id)
+        public T ? GetItem(string ? id)
         {
             var entity = _DBSet.Find(id);
 

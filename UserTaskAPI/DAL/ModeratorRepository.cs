@@ -32,6 +32,15 @@ namespace CabBooking.DAL
 
         }
 
+        public void UpdateMod(ModeratorModel entity)
+        {
+            try {
+                _DBSetMods.Update(entity);
+                Save_Changes();
+            }
+            catch { }
+        }
+
         /*
          *                                      Simple
         * *    Delete any user - complete
@@ -41,6 +50,8 @@ namespace CabBooking.DAL
         * *    Receive emergency Alerts ** Figure out how to update page without refreshing
         * 
         */
+
+
 
         public RideModel[] OngoingTrips()
         {
@@ -93,23 +104,56 @@ namespace CabBooking.DAL
          * *    Average rating
          */
         
+        public List<PaymentModel> GetPayments(string ? id)
+        {
+            if (id == null )
+                return _DBSetPayment.ToList();
+            return _DBSetPayment.Where(entity => entity.CustomerID == id).ToList();
+        }
 
-         /*      MODERATE
-         * *    Driver rating average, distribution and standard deviation
-         * *    User rating average, distribution and standard deviation
-         * *    Driver turn up across the (time frame)
-         * *    Passenger requests across the (time frame) - Show current time in graph.
-         * *    New passengers in last (time frame) : Number and details upon request
-         * *    Lost passengers in last (time frame) : Number and details upon request
-         * *    Distribution of users' last rating before departure
-         * *    Distribution of average user experience before departure 
-         * *    New drivers in last (time frame) : Number and details upon request
-         * *    Lost drivers in last (time frame) : Number and details upon request
-         * *    Distribution of drivers' last rating before departure 
-         * *    Distribution of driver experience before departure
-         * *    Distribution of average driver rating across time of day
-         * *    
-         * 
-         */
+        public PaymentModel ? GetPaymentByID(string ? id)
+        {
+            if (id == null)
+                return null;
+            return _DBSetPayment.Find(id);
+        }
+
+        public List<CarModel> ? GetCars()
+        {
+            return _DBSetCars.ToList();
+        }
+
+        public CarModel ? GetCarByID(string id)
+        {
+            return _DBSetCars.Find(id);
+        }
+
+        public List<CarModel> ? GetCarByModel(string model)
+        {
+            return _DBSetCars.Where(entity => entity.Model == model).ToList();
+        }
+
+        public List<CarModel> ? GetCarsByRegistration(string registration)
+        {
+            return _DBSetCars.Where(entity => entity.Registration == registration).ToList();
+        }
+
+        /*      MODERATE
+        * *    Driver rating average, distribution and standard deviation
+        * *    User rating average, distribution and standard deviation
+        * *    Driver turn up across the (time frame)
+        * *    Passenger requests across the (time frame) - Show current time in graph.
+        * *    New passengers in last (time frame) : Number and details upon request
+        * *    Lost passengers in last (time frame) : Number and details upon request
+        * *    Distribution of users' last rating before departure
+        * *    Distribution of average user experience before departure 
+        * *    New drivers in last (time frame) : Number and details upon request
+        * *    Lost drivers in last (time frame) : Number and details upon request
+        * *    Distribution of drivers' last rating before departure 
+        * *    Distribution of driver experience before departure
+        * *    Distribution of average driver rating across time of day
+        * *    
+        * 
+        */
     }
 }

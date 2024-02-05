@@ -31,7 +31,9 @@ namespace CabBooking.Controllers
         [HttpGet ("ProfileInfo/{id}")]
         public ActionResult Details(string id)
         {
-            return View();
+            var entity = _repo.GetItem(id);
+
+            return entity != null ? View("Views/Passenger/DriverProfile", entity) : NotFound();
         }
 
         // POST: HomeController/Create
@@ -40,8 +42,11 @@ namespace CabBooking.Controllers
         {
             try
             {
+                entity.DateAccountCreated = DateTime.Now;
+                entity.AccountActive = true;
+                entity.Rating = -1;
                 _repo.Create(entity);
-                return Ok();
+                return View("Views/Passenger/WelcomePage.cshtml", entity);
             }
             catch
             {
@@ -51,15 +56,18 @@ namespace CabBooking.Controllers
 
         // POST: HomeController/Edit/5
         [HttpPost ("UpdateProfile/{id}")]
-        public ActionResult Edit([FromBody] PassengerModel entity)
+        public ActionResult UpdateProfile([FromBody] PassengerModel entity)
         {
             try
             {
+                _repo.Update(entity);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                if(_repo.GetItem(entity?.ID) == null)
+                    return NotFound();
+                return BadRequest();
             }
         }
 

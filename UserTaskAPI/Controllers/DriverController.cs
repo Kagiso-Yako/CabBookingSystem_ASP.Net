@@ -30,30 +30,43 @@ namespace CabBooking.Controllers
         [HttpGet ("DriverProfile/{id}")]
         public ActionResult GetDriverInfo(string id)
         {
-            return View("Views/DriverProfile",_repo.GetItem(id));
+            var entity = _repo.GetItem(id);
+
+            return entity != null ? View("Views/Driver/DriverProfile", entity) : NotFound();
         }
 
         // POST: HomeController/Create
         [HttpPost ("CreateAccount")]
         public ActionResult CreateDriverAccount([FromBody] DriverModel entity)
         {
-
+            try
+            {
+                entity.DateAccountCreated = DateTime.Now;
+                entity.AccountActive = true;
+                entity.Rating = -1;
                 _repo.Create(entity);
-                return Ok();
+                return View("Views/Driver/WelcomePage.cshtml", entity);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // POST: HomeController/Edit/5
         [HttpPost ("UpdateProfile")]
-        public ActionResult UpdateInformation([FromBody] DriverModel entity)
+        public ActionResult UpdateProfile([FromBody] DriverModel entity)
         {
             try
             {
-
+                _repo.Update(entity);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                if (_repo.GetItem(entity?.ID) == null)
+                    return NotFound();
+                return BadRequest();
             }
         }
 
@@ -61,7 +74,15 @@ namespace CabBooking.Controllers
         [HttpPost ("DeleteAccount/{id}")]
         public ActionResult Delete(string id)
         {
-            return View();
+            var entity = _repo.GetItem(id);
+            if (entity != null)
+            {
+                entity.DateAccountDeactivated = DateTime.Now;
+                entity.AccountActive = false;
+                _repo.Update(entity);
+                return View();
+            }
+            return BadRequest();
         }
 
         /* Complex operations

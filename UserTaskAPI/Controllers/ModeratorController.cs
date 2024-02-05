@@ -29,9 +29,11 @@ namespace CabBooking.Controllers
 
         // GET: HomeController/Details/5
         [HttpGet("GetModProfile/{id}")]
-        public ActionResult GetEntity(string id)
+        public ActionResult GetModProfile(string id)
         {
-            return View("");
+            var entity = _repo.GetItem(id);
+
+            return entity != null ? View("Views/Moderator/DriverProfile", entity) : NotFound();
         }
 
         [HttpGet("GetAll")]
@@ -57,15 +59,18 @@ namespace CabBooking.Controllers
 
         // POST: HomeController/Edit/5
         [HttpPost("UpdateModDetails/{id}")]
-        public ActionResult Update([FromBody]ModeratorModel moderator)
+        public ActionResult Update([FromBody]ModeratorModel entity)
         {
             try
             {
+                _repo.UpdateMod(entity);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                if (_repo.GetItem(entity?.ID) == null)
+                    return NotFound();
+                return BadRequest();
             }
         }
 
