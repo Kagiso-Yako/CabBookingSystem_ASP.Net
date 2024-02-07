@@ -1,16 +1,15 @@
-﻿@model CabBooking.Models.UserModel
+﻿@model CabBooking.Models.PassengerModel
 
 @{
-    ViewData["Title"] = "CreateAccount";
+    ViewData["Title"] = "View";
 }
+<h1>View</h1>
 
-<h1>CreateAccount</h1>
-
-<h4>UserModel</h4>
+<h4>PassengerModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateAccount">
+        <form asp-action="View">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>

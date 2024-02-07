@@ -6,16 +6,16 @@
 
         public string? Surname { get; set; }
 
-        public int Rating { get; set; }
+        public int Rating { get; set; } = -1;
 
-        public int Trips { get; set; }
+        public int Trips { get; set; } = 0;
 
-        public DateTime DateAccountCreated { get; set; }
+        public DateTime DateAccountCreated { get; set; } = DateTime.Now;
 
-        public DateTime DateAccountDeactivated { get; set; }
+        public DateTime ? DateAccountDeactivated { get; set; } = null;
 
-        public bool AccountActive { get; set; }
+        public bool AccountActive { get; set; } = true;
 
-        public bool AccountSuspended { get; set; }
+        public bool AccountSuspended { get; set; } = false;
     }
 }

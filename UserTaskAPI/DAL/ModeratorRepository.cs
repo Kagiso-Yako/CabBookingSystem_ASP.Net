@@ -94,21 +94,26 @@ namespace CabBooking.DAL
 
 
 
-        /*                                      Analytics
-         *      SIMPLE
-         * *    Active rides
-         * *    Unattended emergency alerts - High priority - Not Core
-         * *    Gross income in day
-         * *    Time of day
+        //                                      Analytics
+        //      SIMPLE
+        //    Active rides
+        
+        public RideModel[] ActiveRides()
+        {
+            return _DBSetRides.Where(entity => entity.Active == true)?.ToArray() ?? Array.Empty<RideModel>(); 
+        }
+        
+        /* *    Unattended emergency alerts - High priority - Not Core
+         /* *    Time of day
          * *    Number of rides in day
          * *    Average rating
          */
         
-        public List<PaymentModel> GetPayments(string ? id)
+        public PaymentModel[] GetPayments(string ? id)
         {
             if (id == null )
-                return _DBSetPayment.ToList();
-            return _DBSetPayment.Where(entity => entity.CustomerID == id).ToList();
+                return _DBSetPayment.ToArray();
+            return _DBSetPayment.Where(entity => entity.CustomerID == id)?.ToArray() ?? Array.Empty<PaymentModel>();
         }
 
         public PaymentModel ? GetPaymentByID(string ? id)
@@ -118,9 +123,9 @@ namespace CabBooking.DAL
             return _DBSetPayment.Find(id);
         }
 
-        public List<CarModel> ? GetCars()
+        public CarModel[] GetCars()
         {
-            return _DBSetCars.ToList();
+            return _DBSetCars.ToArray();
         }
 
         public CarModel ? GetCarByID(string id)
@@ -128,14 +133,14 @@ namespace CabBooking.DAL
             return _DBSetCars.Find(id);
         }
 
-        public List<CarModel> ? GetCarByModel(string model)
+        public CarModel[] GetCarByModel(string model)
         {
-            return _DBSetCars.Where(entity => entity.Model == model).ToList();
+            return _DBSetCars.Where(entity => entity.Model == model)?.ToArray() ?? Array.Empty<CarModel>();
         }
 
-        public List<CarModel> ? GetCarsByRegistration(string registration)
+        public CarModel[] GetCarsByRegistration(string registration)
         {
-            return _DBSetCars.Where(entity => entity.Registration == registration).ToList();
+            return _DBSetCars.Where(entity => entity.Registration == registration).ToArray() ?? Array.Empty<CarModel>();
         }
 
         /*      MODERATE

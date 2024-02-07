@@ -35,15 +35,23 @@ namespace CabBooking.DAL
             return allEntities;
         }
 
-        public void Create(T entity)
+        public void Create(T ?   entity)
         {
-            _DBSet.Add(entity);
-            Save_Changes();
+            if (entity != null)
+            {
+                _DBSet.Add(entity);
+                Save_Changes();
+            }
         }
-    
-        public void Update(T entity) {
+
+        public void Update(T ? entity)
+        {
+
+            if (entity != null) 
+            { 
             _DBSet.Update(entity);
             Save_Changes();
+            }
 
         }
 
@@ -66,12 +74,11 @@ namespace CabBooking.DAL
             return false;
         }
 
-        public bool ContainsItem(T entity)
+        public bool ContainsItem(T ? entity)
         {
-            if (_DBSet.Contains<T>(entity))
-            {
-                return true;
-            }
+            if (entity != null) 
+                if (_DBSet.Contains<T>(entity))
+                    return true;
             return false;
         }
 
@@ -81,8 +88,8 @@ namespace CabBooking.DAL
             if (entity != null)
             {
                 _DBSet.Remove(entity);
+                Save_Changes();
             }
-            Save_Changes();
         }
 
     }

@@ -1,8 +1,10 @@
 ﻿@model CabBooking.Models.DriverModel
 
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = "DriverProfile";
 }
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 
 <h1>View</h1>
 
@@ -73,6 +75,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
+    <a asp-action="EditProfile" asp-route-id="@Model?.ID" href="/api/Driver/EditProfile/@Model?.ID">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

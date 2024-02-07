@@ -32,18 +32,22 @@ namespace CabBooking.Controllers
         {
             var entity = _repo.GetItem(id);
 
-            return entity != null ? View("Views/Driver/DriverProfile", entity) : NotFound();
+            return entity != null ? View("Views/Driver/DriverProfile.cshtml", entity) : NotFound();
+        }
+
+        [HttpGet ("CreateAccount")]
+        public ActionResult CreateDriverAccount() {
+
+            return View("Views/Driver/CreateAccount.cshtml");
         }
 
         // POST: HomeController/Create
-        [HttpPost ("CreateAccount")]
-        public ActionResult CreateDriverAccount([FromBody] DriverModel entity)
-        {
+        //[Route  ("")]
+        [HttpPost ("SubmitDetails")]
+        public ActionResult AddAccount([FromForm] DriverModel entity)
+        { 
             try
             {
-                entity.DateAccountCreated = DateTime.Now;
-                entity.AccountActive = true;
-                entity.Rating = -1;
                 _repo.Create(entity);
                 return View("Views/Driver/WelcomePage.cshtml", entity);
             }
@@ -53,14 +57,32 @@ namespace CabBooking.Controllers
             }
         }
 
+        [HttpGet ("EditProfile/{id}")]
+        public ActionResult UpdateProfileForm(string id)
+        {
+            var entity = _repo.GetItem(id);
+            if (entity != null)
+                try
+                {
+                    return View("UpdateInfo", entity);
+                }
+                catch
+                {
+                    return Ok();
+                }
+            else
+                return NotFound();
+
+        }
+
         // POST: HomeController/Edit/5
         [HttpPost ("UpdateProfile")]
-        public ActionResult UpdateProfile([FromBody] DriverModel entity)
+        public ActionResult UpdateProfile([FromForm] DriverModel entity)
         {
             try
             {
                 _repo.Update(entity);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("DriverProfile");
             }
             catch
             {

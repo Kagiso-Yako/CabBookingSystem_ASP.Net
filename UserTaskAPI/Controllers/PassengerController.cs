@@ -42,9 +42,6 @@ namespace CabBooking.Controllers
         {
             try
             {
-                entity.DateAccountCreated = DateTime.Now;
-                entity.AccountActive = true;
-                entity.Rating = -1;
                 _repo.Create(entity);
                 return View("Views/Passenger/WelcomePage.cshtml", entity);
             }
