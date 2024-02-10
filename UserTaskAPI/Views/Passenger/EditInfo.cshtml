@@ -1,35 +1,30 @@
 ﻿@model CabBooking.Models.PassengerModel
 
 @{
-    ViewData["Title"] = "CreateAccount";
+    ViewData["Title"] = "UpdateInfo";
 }
+
 <h1>View</h1>
 
 <h4>PassengerModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Submit" asp-controller="Passenger" method="post">
+        <form asp-action="UpdateProfile" asp-controller="Passenger" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label"> @Html.DisplayNameFor(model => model.Name)</label>
                 @Html.EditorFor(model => model.Name)
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Surname" class="control-label"></label>
+                <label asp-for="Surname" class="control-label"> @Html.DisplayNameFor(model => model.Surname).</label>
                 @Html.EditorFor(model => model.Surname)
                 <span asp-validation-for="Surname" class="text-danger"></span>
             </div>
+            <input class="text-box single-line" id="ID" name="ID" type="text" value="@Model?.ID" />
             <div class="form-group">
-                <label asp-for="ID" class="control-label">
-                    @Html.DisplayNameFor(model => model.ID)
-                </label>
-                @Html.EditorFor(model => model.ID)
-                <span asp-validation-for="ID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>

@@ -31,10 +31,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Note order of pipeline is important.
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseRouting();
 
+app.UseAuthorization();
+    
 app.MapControllers();
 
 app.Run();

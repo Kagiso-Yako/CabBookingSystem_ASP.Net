@@ -6,13 +6,15 @@ using CabBooking.DAL;
 namespace CabBooking.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class ModeratorController : Controller
     {
 
         // Private members
         private readonly ModeratorRepository _repo;
         private readonly CabBookingContext _context;
+        private readonly string ViewsRoot = "/Views/Moderator/";
+        private readonly string RouteRoot = "/Moderator/";
 
         //Public Members
         public ModeratorController(CabBookingContext context)
@@ -28,12 +30,12 @@ namespace CabBooking.Controllers
          * Delete*/
 
         // GET: HomeController/Details/5
-        [HttpGet("GetModProfile/{id}")]
-        public ActionResult GetModProfile(string id)
+        [HttpGet("ModProfile/{id}")]
+        public ActionResult ModProfile(string id)
         {
             var entity = _repo.GetItem(id);
 
-            return entity != null ? View("Views/Moderator/DriverProfile", entity) : NotFound();
+            return entity != null ? View( entity) : NotFound();
         }
 
         [HttpGet("GetAll")]
@@ -42,29 +44,31 @@ namespace CabBooking.Controllers
             return View();
         }
 
-        // POST: HomeController/Create
-        [HttpPost("CreateModAccount")]
-        public ActionResult CreateModerator([FromBody] ModeratorModel entity)
+        [HttpGet ("CreateAccount")]
+        public ActionResult CreateAccount()
         {
-            try
-            {
-                _repo.CreateMod(entity);
-                return Ok();
-            }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
-        // POST: HomeController/Edit/5
-        [HttpPost("UpdateModDetails/{id}")]
-        public ActionResult Update([FromBody]ModeratorModel entity)
+        [HttpGet ("EditInfo/{id}")]
+        public ActionResult EditInfo(string id)
         {
+            var entity = _repo.GetModAccount(id); 
+            if (entity != null)
+            {
+                return View(entity);
+            }
+            return NotFound();
+        }
+
+        [HttpPost ("UpdateProfile")]
+        public ActionResult UpdateProfile([FromForm] ModeratorModel entity)
+        {
+
             try
             {
                 _repo.UpdateMod(entity);
-                return RedirectToAction(nameof(Index));
+                return Redirect(RouteRoot + "DriverProfile/" + entity?.ID);
             }
             catch
             {
@@ -73,6 +77,22 @@ namespace CabBooking.Controllers
                 return BadRequest();
             }
         }
+
+        // POST: HomeController/Create
+        [HttpPost("Submit")]
+        public ActionResult Submit([FromBody] ModeratorModel entity)
+        {
+            try
+            {
+                _repo.CreateMod(entity);
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
 
         // GET: HomeController/Delete/5
         [HttpPost ("DeleteModAccount/{id}")]

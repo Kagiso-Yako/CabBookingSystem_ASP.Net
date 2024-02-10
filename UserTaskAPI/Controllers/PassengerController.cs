@@ -7,13 +7,15 @@ using CabBooking.DAL;
 namespace CabBooking.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class PassengerController : Controller
     {
 
         // Private members
         private readonly UserDataRepository _repo;
         private readonly CabBookingContext _context;
+        private readonly string ViewsRoot = "/Views/Passenger/";
+        private readonly string RouteRoot = "/Passenger/";
 
         //Public Members
         public PassengerController(CabBookingContext context)
@@ -28,37 +30,62 @@ namespace CabBooking.Controllers
          * Update
          * Delete*/
         // GET: HomeController/Details/5
-        [HttpGet ("ProfileInfo/{id}")]
-        public ActionResult Details(string id)
+        [HttpGet ("PassengerProfile/{id}")]
+        public ActionResult PassengerProfile(string id)
         {
             var entity = _repo.GetItem(id);
 
-            return entity != null ? View("Views/Passenger/DriverProfile", entity) : NotFound();
+            return entity != null ? View(entity) : NotFound();
+        }
+
+        [HttpGet ("CreateAccount")]
+        public ActionResult CreateAccount() {
+
+            return View();
         }
 
         // POST: HomeController/Create
-        [HttpPost ("CreateAccount")]
-        public ActionResult CreateUser([FromBody] PassengerModel entity)
+        [HttpPost ("Submit")]
+        public ActionResult Submit([FromForm] PassengerModel entity)
         {
             try
             {
                 _repo.Create(entity);
-                return View("Views/Passenger/WelcomePage.cshtml", entity);
+                return View(ViewsRoot + "WelcomePage.cshtml", entity);
             }
             catch
             {
-                return View("Views/CreateAccount.cshtml", entity);
+                return BadRequest();
             }
         }
 
+
+        [HttpGet("EditInfo/{id}")]
+        public ActionResult EditInfo(string id)
+        {
+            var entity = _repo.GetItem(id);
+            if (entity != null)
+                try
+                {
+                    return View(entity);
+                }
+                catch
+                {
+                    return Ok();
+                }
+            else
+                return NotFound();
+
+        }
+
         // POST: HomeController/Edit/5
-        [HttpPost ("UpdateProfile/{id}")]
-        public ActionResult UpdateProfile([FromBody] PassengerModel entity)
+        [HttpPost ("UpdateProfile")]
+        public ActionResult UpdateProfile([FromForm] PassengerModel entity)
         {
             try
             {
                 _repo.Update(entity);
-                return RedirectToAction(nameof(Index));
+                return Redirect(RouteRoot + "PassengerProfile/" + entity.ID);
             }
             catch
             {

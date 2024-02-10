@@ -1,33 +1,28 @@
-﻿@model CabBooking.Models.DriverModel
+﻿@model CabBooking.Models.ModeratorModel;
 
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = "UpdateInfo";
 }
 
 <h1>View</h1>
 
-<h4>DriverModel</h4>
+<h4>Moderator Model</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="View" action="UpdateProfile" method="post">
+        <form asp-controller="Driver" asp-action="UpdateProfile" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CarID" class="control-label">  @Html.DisplayNameFor(model => model.CarID) </label>
-                <input asp-for="CarID" class="form-control" placeholder="@Model?.CarID" />
-                <span asp-validation-for="CarID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Name" class="control-label"> @Html.DisplayNameFor(model => model.Name)</label>
-                <input asp-for="Name" class="form-control" placeholder="@Model?.Name" />
+                @Html.EditorFor(model => model.Name)
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Surname" class="control-label"> @Html.DisplayNameFor(model => model.Surname)</label>
-                <input asp-for="Surname" class="form-control" placeholder="@Model?.Surname" />
+                @Html.EditorFor(model => model.Surname)
                 <span asp-validation-for="Surname" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="ID" />
+           <input class="text-box single-line" id="ID" name="ID" type="hidden" value=@Model?.ID />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -39,6 +34,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

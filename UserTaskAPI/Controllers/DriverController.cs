@@ -2,16 +2,19 @@
 using CabBooking.DAL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+ 
 
 namespace CabBooking.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route ("[controller]")]
     public class DriverController : Controller
     {
         // Private members
         private readonly UserDataRepository _repo;
         private readonly CabBookingContext _context;
+        private readonly string ViewsRoot = "/Views/Driver/";
+        private readonly string RouteRoot = "/Driver/";
 
         //Public Members
         public DriverController(CabBookingContext context)
@@ -27,29 +30,30 @@ namespace CabBooking.Controllers
          * Delete*/
 
         // GET: HomeController/Details/5
+
         [HttpGet ("DriverProfile/{id}")]
-        public ActionResult GetDriverInfo(string id)
+        public ActionResult DriverProfile(string id)
         {
             var entity = _repo.GetItem(id);
 
-            return entity != null ? View("Views/Driver/DriverProfile.cshtml", entity) : NotFound();
+            return entity != null ? View(entity) : NotFound();
         }
 
         [HttpGet ("CreateAccount")]
-        public ActionResult CreateDriverAccount() {
+        public ActionResult CreateAccount() {
 
-            return View("Views/Driver/CreateAccount.cshtml");
+            return View();
         }
 
         // POST: HomeController/Create
         //[Route  ("")]
-        [HttpPost ("SubmitDetails")]
-        public ActionResult AddAccount([FromForm] DriverModel entity)
+        [HttpPost ("Submit")]
+        public ActionResult Submit([FromForm] DriverModel entity)
         { 
             try
             {
                 _repo.Create(entity);
-                return View("Views/Driver/WelcomePage.cshtml", entity);
+                return View(ViewsRoot + "WelcomePage.cshtml", entity);
             }
             catch
             {
@@ -58,13 +62,13 @@ namespace CabBooking.Controllers
         }
 
         [HttpGet ("EditProfile/{id}")]
-        public ActionResult UpdateProfileForm(string id)
+        public ActionResult EditInfo(string id)
         {
             var entity = _repo.GetItem(id);
             if (entity != null)
                 try
                 {
-                    return View("UpdateInfo", entity);
+                    return View(entity);
                 }
                 catch
                 {
@@ -77,12 +81,14 @@ namespace CabBooking.Controllers
 
         // POST: HomeController/Edit/5
         [HttpPost ("UpdateProfile")]
+
         public ActionResult UpdateProfile([FromForm] DriverModel entity)
         {
+
             try
             {
                 _repo.Update(entity);
-                return RedirectToAction("DriverProfile");
+                return Redirect(RouteRoot + "DriverProfile/" + entity?.ID);
             }
             catch
             {
@@ -114,6 +120,8 @@ namespace CabBooking.Controllers
          * Rate Experience/User 
          * Chat functionality - Most complex - Unsure how to approach yet. - Not part of core
          * */
+
+
 
     }
 }

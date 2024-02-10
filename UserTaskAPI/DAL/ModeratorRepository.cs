@@ -32,6 +32,18 @@ namespace CabBooking.DAL
 
         }
 
+        public ModeratorModel ? GetModAccount(string id)
+        {
+            try
+            {
+                return _DBSetMods?.Find(id);
+            }
+            catch {
+                return null;
+            }
+
+        }
+
         public void UpdateMod(ModeratorModel entity)
         {
             try {
